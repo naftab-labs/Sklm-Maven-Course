@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI PM Sprint: Ship Your First AI Feature | Skilium</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #fff;
+        }
+        
+        /* Header */
+        .header {
+            background: #000;
+            color: #fff;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+        .logo span { color: #00d4ff; }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 14px;
+        }
+        .nav-links a:hover { color: #00d4ff; }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #fff;
+            padding: 100px 40px;
+            text-align: center;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid #00d4ff;
+            color: #00d4ff;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero h1 span { color: #00d4ff; }
+        .hero-subtitle {
+            font-size: 22px;
+            color: #888;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-cta {
+            display: inline-block;
+            background: #00d4ff;
+            color: #000;
+            padding: 20px 50px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        .hero-cta:hover, .hero-cta:active {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+        .hero-cta.clicked {
+            background: #00aa88;
+        }
+        .hero-guarantee {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Social Proof Bar */
+        .social-proof {
+            background: #f8f9fa;
+            padding: 40px;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .social-proof p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .company-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .company {
+            font-size: 16px;
+            font-weight: 600;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Two Paths */
+        .paths {
+            padding: 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        .section-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 60px;
+        }
+        .path-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .path-card {
+            border: 2px solid #e9ecef;
+            border-radius: 16px;
+            padding: 50px;
+            position: relative;
+            transition: all 0.3s;
+        }
+        .path-card:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        .path-card.popular {
+            border-color: #00d4ff;
+            background: linear-gradient(135deg, #f0f9ff 0%, #fff 100%);
+        }
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #00d4ff;
+            color: #000;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .path-name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .path-description {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .path-features {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+        .path-features li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 15px;
+        }
+        .path-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #00d4ff;
+            font-weight: 700;
+        }
+        .path-price {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+        .path-price span {
+            font-size: 20px;
+            color: #999;
+            font-weight: 400;
+        }
+        .path-cta {
+            display: block;
+            text-align: center;
+            padding: 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .path-card.popular .path-cta {
+            background: #00d4ff;
+            color: #000;
+        }
+        .path-card:not(.popular) .path-cta {
+            background: #000;
+            color: #fff;
+        }
+        
+        /* Instructor */
+        .instructor {
+            background: #000;
+            color: #fff;
+            padding: 100px 40px;
+        }
+        .instructor-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .instructor-image {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+        }
+        .instructor-title {
+            font-size: 14px;
+            color: #00d4ff;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+        .instructor h2 {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .instructor p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+        .instructor-stats {
+            display: flex;
+            gap: 40px;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #00d4ff;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #888;
+        }
+        
+        /* FAQ */
+        .faq {
+            padding: 100px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq h2 {
+            text-align: center;
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 60px;
+        }
+        .faq-item {
+            border-bottom: 1px solid #e9ecef;
+            padding: 30px 0;
+        }
+        .faq-question {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        .faq-answer {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #666;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #0a0a0a;
+            color: #fff;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        .footer-cta {
+            display: inline-block;
+            background: #00d4ff;
+            color: #000;
+            padding: 20px 50px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        .footer p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .path-grid { grid-template-columns: 1fr; }
+            .instructor-content { grid-template-columns: 1fr; text-align: center; }
+            .instructor-image { margin: 0 auto; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">SKILIUM<span>.</span></div>
+        <nav class="nav-links">
+            <a href="#templates">Templates</a>
+            <a href="#schedule">Schedule</a>
+            <a href="#" class="nav-cta" onclick="alert('Download this HTML file and open locally. Share with your team!'); return false;">Download Now</a>
+        </nav>
+    </header>
+    
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">NOW ENROLLING FOR JULY 2026</div>
+        <h1>Ship Your First <span>AI Feature</span></h1>
+        <p class="hero-subtitle">The practical, no-fluff course for PMs who want to build AI products—taught by an ex-Amazon S3 PM who shipped AI at scale</p>
+        <a href="#" class="hero-cta" onclick="alert('Download this HTML file and open locally. Share with your team!'); return false;">Get the Course</a>
+        <p class="hero-guarantee">30-day money-back guarantee • 6-10 students per cohort</p>
+    </section>
+    
+    <!-- Social Proof -->
+    <section class="social-proof">
+        <p>Trained professionals from</p>
+        <div class="company-logos">
+            <span class="company">Amazon</span>
+            <span class="company">Microsoft</span>
+            <span class="company">Google</span>
+            <span class="company">Meta</span>
+            <span class="company">IBM</span>
+        </div>
+    </section>
+    
+    <!-- Two Paths -->
+    <section class="paths" id="pricing">
+        <h2 class="section-title">Choose Your Path</h2>
+        <p class="section-subtitle">Start with the workshop, upgrade to the cohort when you're ready to ship</p>
+        
+        <div class="path-grid">
+            <!-- Workshop -->
+            <div class="path-card">
+                <div class="path-name">The Workshop</div>
+                <div class="path-description">Test the waters. Learn the fundamentals and build your first AI prototype in one intensive Saturday.</div>
+                <ul class="path-features">
+                    <li>4 hours live instruction</li>
+                    <li>Saturday 10am-2pm PST</li>
+                    <li>AI PRD template included</li>
+                    <li>Prompt engineering frameworks</li>
+                    <li>Prototype using no-code tools</li>
+                    <li>30-day money-back guarantee</li>
+                </ul>
+                <div class="path-price">$249 <span>/ one-time</span></div>
+                <a href="#" class="path-cta" onclick="alert('Download this HTML file and open locally. Share with your team!'); return false;">Get Workshop</a>
+            </div>
+            
+            <!-- Cohort -->
+            <div class="path-card popular">
+                <div class="popular-badge">MOST POPULAR</div>
+                <div class="path-name">The Full Sprint</div>
+                <div class="path-description">Go deep. Two weeks of guided implementation with feedback, accountability, and a certificate at the end.</div>
+                <ul class="path-features">
+                    <li>Everything in Workshop, PLUS:</li>
+                    <li>4 live 90-min sessions (Tue/Thu)</li>
+                    <li>2 weeks async support</li>
+                    <li>User research validation</li>
+                    <li>AI evals and testing frameworks</li>
+                    <li>Ship plan + certificate</li>
+                    <li>Alumni community access</li>
+                </ul>
+                <div class="path-price">$497 <span>/ one-time</span></div>
+                <a href="#" class="path-cta" onclick="alert('Download this HTML file and open locally. Share with your team!'); return false;">Get Full Sprint</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Instructor -->
+    <section class="instructor" id="instructor">
+        <div class="instructor-content">
+            <div class="instructor-image">👤</div>
+            <div>
+                <div class="instructor-title">YOUR INSTRUCTOR</div>
+                <h2>Noor Aftab</h2>
+                <p>Former Amazon S3 PM who led AI initiatives for Fortune 500 clients. TEDxIslamabad speaker on women in AI. 500+ professionals trained across IBM, Amazon, and 14+ major conferences. I teach AI the way I wish someone had taught me—practical, jargon-free, and focused on shipping.</p>
+                <div class="instructor-stats">
+                    <div class="stat">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Students Taught</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">14+</div>
+                        <div class="stat-label">Major Conferences</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">$100M+</div>
+                        <div class="stat-label">Products Shipped</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ -->
+    <section class="faq">
+        <h2>Questions? We've Got Answers</h2>
+        
+        <div class="faq-item">
+            <div class="faq-question">Do I need to know how to code?</div>
+            <div class="faq-answer">Nope. This course is designed for PMs, not engineers. We'll use no-code and low-code tools so you can build prototypes without writing code. If you want to go deeper later, you can.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">What if I've never worked with AI before?</div>
+            <div class="faq-answer">Perfect. This course assumes zero AI background. We'll start with the mental models and build up. By the end, you'll have shipped something—most courses just teach you about AI.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">Can I get my company to pay for this?</div>
+            <div class="faq-answer">Absolutely. Most students expense this as professional development. We can provide an invoice and course description for your manager.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">What if I can't make the live sessions?</div>
+            <div class="faq-answer">Recordings are available for 30 days, but we strongly recommend attending live. The value is in the real-time feedback and accountability.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">What's the difference between the workshop and cohort?</div>
+            <div class="faq-answer">The workshop is a one-day intensive where you learn the foundations and build a prototype. The cohort is two weeks of guided implementation where you actually ship your AI feature with feedback and accountability. Many students do both.</div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <a href="#" class="footer-cta" onclick="alert('Download this HTML file and open locally. Share with your team!'); return false;">Download Course</a>
+        <p>Questions? Email hello@skilium.ai</p>
+        <p style="margin-top: 20px; font-size: 12px; color: #444;">© 2026 Skilium. 30-day money-back guarantee.</p>
+    </footer>
+</body>
+</html>

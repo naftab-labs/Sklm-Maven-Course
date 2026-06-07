@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#000000"/>
+  
+  <!-- Outer glow rings -->
+  <circle cx="200" cy="200" r="160" fill="none" stroke="#00d4ff" stroke-width="2" opacity="0.3"/>
+  <circle cx="200" cy="200" r="140" fill="none" stroke="#00d4ff" stroke-width="3" opacity="0.5"/>
+  <circle cx="200" cy="200" r="120" fill="none" stroke="#00d4ff" stroke-width="4" opacity="0.7"/>
+  
+  <!-- Inner core - stylized S / neural network node -->
+  <circle cx="200" cy="200" r="80" fill="#00d4ff" opacity="0.9"/>
+  <circle cx="200" cy="200" r="70" fill="#000000"/>
+  
+  <!-- Stylized S shape representing Skilium + Signal/Spark -->
+  <path d="M 170 160 
+           Q 200 140, 230 160 
+           Q 245 180, 230 200 
+           Q 200 220, 170 200 
+           Q 155 220, 170 240 
+           Q 200 260, 230 240"
+        fill="none" 
+        stroke="#00d4ff" 
+        stroke-width="12" 
+        stroke-linecap="round"
+        opacity="0.9"/>
+  
+  <!-- Connection nodes - representing AI/neural network -->
+  <circle cx="170" cy="160" r="8" fill="#00d4ff"/>
+  <circle cx="230" cy="160" r="8" fill="#00d4ff"/>
+  <circle cx="230" cy="240" r="8" fill="#00d4ff"/>
+  <circle cx="170" cy="240" r="8" fill="#00d4ff"/>
+  <circle cx="200" cy="200" r="10" fill="#00d4ff"/>
+  
+  <!-- Spark/signal lines emanating -->
+  <line x1="200" y1="40" x2="200" y2="80" stroke="#00d4ff" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+  <line x1="200" y1="320" x2="200" y2="360" stroke="#00d4ff" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+  <line x1="80" y1="200" x2="120" y2="200" stroke="#00d4ff" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+  <line x1="280" y1="200" x2="320" y2="200" stroke="#00d4ff" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+  
+  <!-- Diagonal sparks -->
+  <line x1="110" y1="110" x2="140" y2="140" stroke="#00d4ff" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <line x1="290" y1="290" x2="260" y2="260" stroke="#00d4ff" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <line x1="290" y1="110" x2="260" y2="140" stroke="#00d4ff" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <line x1="110" y1="290" x2="140" y2="260" stroke="#00d4ff" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+</svg>

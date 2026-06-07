@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="200" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="200" fill="#000000"/>
+  
+  <!-- Logo icon on left -->
+  <g transform="translate(40, 40)">
+    <!-- Outer circle -->
+    <circle cx="60" cy="60" r="55" fill="none" stroke="#00d4ff" stroke-width="3"/>
+    
+    <!-- Inner S -->
+    <path d="M 35 40 Q 60 25, 85 40 Q 95 55, 85 70 Q 75 70, 55 75 Q 35 80, 45 95 Q 55 110, 75 105" 
+          fill="none" 
+          stroke="#00d4ff" 
+          stroke-width="8" 
+          stroke-linecap="round"/>
+    
+    <!-- Decorative dots -->
+    <circle cx="35" cy="40" r="4" fill="#00d4ff"/>
+    <circle cx="85" cy="40" r="4" fill="#00d4ff"/>
+    <circle cx="75" cy="105" r="4" fill="#00d4ff"/>
+  </g>
+  
+  <!-- SKILIUM text -->
+  <text x="180" y="120" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+        font-size="72" 
+        font-weight="800" 
+        fill="#ffffff"
+        letter-spacing="6">SKILIUM</text>
+  
+  <!-- Dot/cyan accent -->
+  <text x="528" y="120" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+        font-size="72" 
+        font-weight="800" 
+        fill="#00d4ff">.</text>
+  
+  <!-- Tagline -->
+  <text x="180" y="155" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="16" 
+        font-weight="400" 
+        fill="#888888"
+        letter-spacing="3">AI PRODUCT MANAGEMENT &amp; AGENTS</text>
+</svg>

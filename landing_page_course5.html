@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent MVP in 1 Day | Build Your First Working AI Agent</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #fff;
+        }
+        
+        /* Header */
+        .header {
+            background: #000;
+            color: #fff;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+        .logo span { color: #00ff88; }
+        .nav-cta {
+            background: #00ff88;
+            color: #000;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #0a0a0a 0%, #0d1f0d 50%, #0a0a0a 100%);
+            color: #fff;
+            padding: 80px 40px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,255,136,0.05) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 0, 85, 0.2);
+            border: 1px solid #ff0055;
+            color: #ff0055;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 900;
+            line-height: 1.0;
+            margin-bottom: 25px;
+            letter-spacing: -2px;
+        }
+        .hero h1 .highlight {
+            color: #00ff88;
+            display: block;
+            font-size: 80px;
+        }
+        .hero-subtitle {
+            font-size: 24px;
+            color: #aaa;
+            margin-bottom: 15px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-promise {
+            font-size: 18px;
+            color: #00ff88;
+            font-weight: 600;
+            margin-bottom: 40px;
+        }
+        .hero-cta {
+            display: inline-block;
+            background: #ff0055;
+            color: #fff;
+            padding: 22px 60px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 800;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(255, 0, 85, 0.4);
+        }
+        .hero-meta {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .hero-meta-item {
+            text-align: center;
+        }
+        .hero-meta-item strong {
+            display: block;
+            font-size: 24px;
+            color: #fff;
+        }
+        .hero-meta-item span {
+            font-size: 14px;
+            color: #888;
+        }
+        
+        /* What You Build */
+        .what-you-build {
+            background: #f8f9fa;
+            padding: 100px 40px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-header h2 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+        .section-header p {
+            font-size: 20px;
+            color: #666;
+        }
+        .agent-types {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .agent-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 40px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+        .agent-card:hover {
+            border-color: #00ff88;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .agent-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .agent-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .agent-card p {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .agent-tag {
+            display: inline-block;
+            background: #00ff88;
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .selected-tag {
+            display: none;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #00ff88;
+            font-weight: 600;
+        }
+        .agent-card.selected .selected-tag {
+            display: block;
+        }
+        
+        /* Schedule */
+        .schedule {
+            padding: 100px 40px;
+            background: #000;
+            color: #fff;
+        }
+        .schedule h2 {
+            text-align: center;
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 60px;
+        }
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .time-block {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 30px;
+            padding: 30px 0;
+            border-bottom: 1px solid #333;
+        }
+        .time-block:last-child {
+            border-bottom: none;
+        }
+        .time-slot {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00ff88;
+        }
+        .time-content h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .time-content p {
+            font-size: 16px;
+            color: #888;
+            line-height: 1.6;
+        }
+        .time-content strong {
+            color: #fff;
+        }
+        
+        /* Price Section */
+        .pricing {
+            padding: 100px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+        }
+        .pricing-card {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #fff;
+            border: 3px solid #000;
+            border-radius: 24px;
+            padding: 60px;
+            position: relative;
+        }
+        .pricing-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff0055;
+            color: #fff;
+            padding: 10px 30px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .pricing-name {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        .pricing-description {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .pricing-amount {
+            font-size: 72px;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+        .pricing-original {
+            text-decoration: line-through;
+            color: #999;
+            margin-bottom: 30px;
+        }
+        .pricing-features {
+            text-align: left;
+            list-style: none;
+            margin-bottom: 40px;
+        }
+        .pricing-features li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 16px;
+        }
+        .pricing-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+            font-weight: 800;
+        }
+        .pricing-cta {
+            display: block;
+            background: #ff0055;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 800;
+            transition: all 0.3s;
+        }
+        .pricing-cta:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(255, 0, 85, 0.3);
+        }
+        .pricing-guarantee {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Who Is This For */
+        .audience {
+            padding: 100px 40px;
+            background: #fff;
+        }
+        .audience h2 {
+            text-align: center;
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 60px;
+        }
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .audience-card {
+            text-align: center;
+            padding: 40px;
+        }
+        .audience-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        .audience-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .audience-card p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.7;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 40px;
+            background: #000;
+            color: #fff;
+        }
+        .testimonials h2 {
+            text-align: center;
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 60px;
+        }
+        .testimonial {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .testimonial.quote {
+            font-size: 32px;
+            line-height: 1.5;
+            color: #fff;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .testimonial.author {
+            font-size: 18px;
+            color: #00ff88;
+            font-weight: 700;
+        }
+        .testimonial.role {
+            font-size: 16px;
+            color: #888;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #0a0a0a;
+            color: #fff;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        .footer-logo {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        .footer-logo span { color: #00ff88; }
+        .footer p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .footer-cta {
+            display: inline-block;
+            background: #00ff88;
+            color: #000;
+            padding: 18px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            margin: 20px 0;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 40px; }
+            .hero h1 .highlight { font-size: 50px; }
+            .agent-types,
+            .audience-grid { grid-template-columns: 1fr; }
+            .pricing-card { padding: 40px 30px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">SKILIUM<span>.</span></div>
+        <a href="#" class="nav-cta" onclick="alert('Download this HTML file and open locally. Share with your team!'); return false;">Download Now</a>
+    </header>
+    
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">AGENTIC AI IS #1 TRENDING ON MAVEN</div>
+            <h1>
+                Build an AI Agent
+                <span class="highlight">in 1 Day</span>
+            </h1>
+            <p class="hero-subtitle">No coding required. No ML degree. No waiting.</p>
+            <p class="hero-promise">By 2pm Saturday, you'll have a working AI agent that actually does something useful.</p>
+            <a href="#" class="hero-cta" onclick="alert('Download this HTML file and open locally. Share with your team!'); return false;">Get the Blueprint</a>
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <strong>Saturday</strong>
+                    <span>10am-2pm PST</span>
+                </div>
+                <div class="hero-meta-item">
+                    <strong>10 Seats</strong>
+                    <span>Limited Capacity</span>
+                </div>
+                <div class="hero-meta-item">
+                    <strong>$349</strong>
+                    <span>One-Time Payment</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- What You Build -->
+    <section class="what-you-build" id="templates">
+        <div class="container">
+            <div class="section-header">
+                <h2>Choose Your Agent</h2>
+                <p>Pick one of three templates. We'll build it together, step by step.</p>
+            </div>
+            
+            <div class="agent-types">
+                <div class="agent-card" onclick="this.classList.toggle('selected')">
+                    <div class="agent-icon">🔍</div>
+                    <h3>Research Agent</h3>
+                    <p>Takes any topic, researches it across the web, and delivers a structured summary with sources. Perfect for competitive research or staying current.</p>
+                    <div class="agent-tag">NO-CODE</div>
+                    <div class="selected-tag">✓ Selected</div>
+                </div>
+                
+                <div class="agent-card" onclick="this.classList.toggle('selected')">
+                    <div class="agent-icon">✉️</div>
+                    <h3>Communication Agent</h3>
+                    <p>Researches your recipient, drafts personalized messages, and sends them. Great for sales outreach, investor updates, or customer success.</p>
+                    <div class="agent-tag">LOW-CODE</div>
+                    <div class="selected-tag">✓ Selected</div>
+                </div>
+                
+                <div class="agent-card" onclick="this.classList.toggle('selected')">
+                    <div class="agent-icon">⚙️</div>
+                    <h3>Task Agent</h3>
+                    <p>Handles multi-step workflows end-to-end: processing applications, onboarding hires, or publishing content. The most powerful option.</p>
+                    <div class="agent-tag">MIX</div>
+                    <div class="selected-tag">✓ Selected</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Schedule -->
+    <section class="schedule">
+        <div class="container">
+            <h2>Your Saturday Schedule</h2>
+            
+            <div class="timeline">
+                <div class="time-block">
+                    <div class="time-slot">10:00am</div>
+                    <div class="time-content">
+                        <h3>Hour 1: Agent Foundations</h3>
+                        <p>What agents actually are (and aren't). The Agent Spectrum. Pick your template. <strong>By 11am: You have a plan.</strong></p>
+                    </div>
+                </div>
+                
+                <div class="time-block">
+                    <div class="time-slot">11:00am</div>
+                    <div class="time-content">
+                        <h3>Hour 2: Building Your Agent</h3>
+                        <p>Everyone builds simultaneously. No-code stack. Live troubleshooting. <strong>By 12pm: You have a working prototype.</strong></p>
+                    </div>
+                </div>
+                
+                <div class="time-block">
+                    <div class="time-slot">12:00pm</div>
+                    <div class="time-content">
+                        <h3>Hour 3: Adding Intelligence</h3>
+                        <p>Prompt engineering. Memory. Tools. Error handling. <strong>By 1pm: Your agent actually works.</strong></p>
+                    </div>
+                </div>
+                
+                <div class="time-block">
+                    <div class="time-slot">1:00pm</div>
+                    <div class="time-content">
+                        <h3>Hour 4: Demo + Deploy</h3>
+                        <p>Everyone demos their agent. Deployment options. Next steps. <strong>By 2pm: You've shipped.</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="pricing-card">
+            <div class="pricing-badge">Limited to 10 people</div>
+            <div class="pricing-name">AI Agent MVP in 1 Day</div>
+            <div class="pricing-description">Saturday Intensive Workshop</div>
+            <div class="pricing-amount">$349</div>
+            <div class="pricing-original">Comparable courses: $997+</div>
+            
+            <ul class="pricing-features">
+                <li>4 hours of hands-on instruction</li>
+                <li>3 agent templates to choose from</li>
+                <li>No-code and low-code options</li>
+                <li>Working agent by 2pm Saturday</li>
+                <li>Agent documentation template</li>
+                <li>7-day improvement challenge</li>
+                <li>Alumni community access</li>
+                <li>Certificate of completion</li>
+            </ul>
+            
+            <a href="#" class="pricing-cta" onclick="alert('Download this HTML file and open locally. Share with your team!'); return false;">Get the Course — $349</a>
+            <p class="pricing-guarantee">30-day money-back guarantee. If you don't have a working agent by 2pm, full refund.</p>
+        </div>
+    </section>
+    
+    <!-- Audience -->
+    <section class="audience">
+        <div class="container">
+            <h2>Who This Is For</h2>
+            
+            <div class="audience-grid">
+                <div class="audience-card">
+                    <div class="audience-icon">👤</div>
+                    <h3>Product Managers</h3>
+                    <p>You want to understand agents by building one. You need to lead AI initiatives but don't know where to start.</p>
+                </div>
+                
+                <div class="audience-card">
+                    <div class="audience-icon">🚀</div>
+                    <h3>Founders</h3>
+                    <p>You need a working prototype to show investors or customers. You want to validate an AI feature before hiring engineers.</p>
+                </div>
+                
+                <div class="audience-card">
+                    <div class="audience-icon">⚡</div>
+                    <h3>Operators</h3>
+                    <p>You have a repetitive task that should be automated. You're tired of doing work that a machine could handle.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>What Past Students Say</h2>
+            
+            <div class="testimonial">
+                <p class="quote">"I went from 'I don't understand agents' to having a working research agent in 4 hours. Noor explains things in a way that just clicks."</p>
+                <p class="author">Sarah Chen</p>
+                <p class="role">Senior PM, Series B Startup</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">SKILIUM<span>.</span></div>
+        <p>Taught by Noor Aftab, ex-Amazon S3 PM, TEDxIslamabad Speaker</p>
+        <p>500+ professionals trained • 14+ major conferences</p>
+        <a href="#" class="footer-cta" onclick="alert('Download this HTML file and open locally. Share with your team!'); return false;">Download Course — $349</a>
+        <p style="margin-top: 30px; font-size: 14px; color: #444;">Questions? hello@skilium.ai • 30-day money-back guarantee</p>
+    </footer>
+</body>
+</html>
